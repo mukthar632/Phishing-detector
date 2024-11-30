@@ -8,18 +8,39 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Include Custom CSS -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Inline custom styles for better spacing and appearance */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .logo {
+      margin-bottom: 20px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    #resultContainer {
+      margin-top: 20px;
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+    #checkButton {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
   <div class="container p-3">
-    <div class="text-center mb-3">
+    <div class="text-center logo">
       <img src="icon.png" alt="Logo" width="64" height="64">
     </div>
     <h4 class="text-center mb-3">Phishing URL Detector</h4>
     
     <!-- URL Input and Check Button -->
-    <div class="input-group mb-3">
-      <input type="text" id="urlInput" class="form-control" placeholder="Enter URL">
-      <button id="checkButton" class="btn btn-primary">Check URL</button>
+    <div class="input-group">
+      <input type="text" id="urlInput" class="form-control" placeholder="Enter or fetch URL">
+      <button id="checkButton" class="btn btn-primary mt-2">Check URL</button>
     </div>
 
     <!-- Loading Spinner -->
@@ -30,7 +51,7 @@
     </div>
 
     <!-- Result Display -->
-    <div id="resultContainer" class="alert d-none mt-3" role="alert">
+    <div id="resultContainer" class="alert d-none" role="alert">
       <span id="resultText"></span>
     </div>
 

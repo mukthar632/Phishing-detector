@@ -1,6 +1,8 @@
 # Importing required libraries
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import numpy as np
+import pandas as pd
 import pickle
 import logging
 from feature import FeatureExtraction
@@ -11,6 +13,10 @@ logging.basicConfig(
     level=logging.INFO,        # Logging level
     format='%(asctime)s - %(levelname)s - %(message)s'  # Log format
 )
+
+# Initialize Flask app
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Load the trained model
 file = open("newmodel.pkl", "rb")
@@ -30,22 +36,42 @@ def predict():
     try:
         # Extract URL from the request
         data = request.get_json()
-        url = data.get('url', '')
+        url = data.get('url', '').strip()  # Remove leading/trailing spaces
 
         if not url:
             logging.warning("Received a request with no URL provided.")
             return jsonify({'error': 'No URL provided'}), 400
 
+        # Validate if the input is a proper URL
+        if not url.startswith(("http://", "https://")):
+            logging.warning(f"Invalid URL format: {url}")
+            return jsonify({'error': 'Invalid URL format. Ensure it starts with http:// or https://'}), 400
+
         # Feature extraction
         obj = FeatureExtraction(url)
-        features = np.array(obj.getFeaturesList()).reshape(1, 30)
+        feature_list = obj.getFeaturesList()
+
+        # Define the feature names (replace placeholders with your actual feature names)
+        feature_names = [
+            "UsingIP", "LongURL", "ShortURL", "Symbol@", "Redirecting//",
+            "PrefixSuffix-", "SubDomains", "HTTPS", "DomainRegLen", "Favicon",
+            "NonStdPort", "HTTPSDomainURL", "RequestURL", "AnchorURL",
+            "LinksInScriptTags", "ServerFormHandler", "InfoEmail", "AbnormalURL",
+            "WebsiteForwarding", "StatusBarCust", "DisableRightClick",
+            "UsingPopupWindow", "IframeRedirection", "AgeofDomain",
+            "DNSRecording", "WebsiteTraffic", "PageRank", "GoogleIndex",
+            "LinksPointingToPage", "StatsReport"
+        ]
+
+        # Convert features to DataFrame with feature names
+        features_df = pd.DataFrame([feature_list], columns=feature_names)
 
         # Log extracted features
         logging.info(f"URL: {url}")
-        logging.info(f"Extracted Features: {obj.getFeaturesList()}")
+        logging.info(f"Extracted Features: {feature_list}")
 
-        # Prediction
-        y_pred =gbc.predict(features)[0]
+        # Make prediction
+        y_pred = gbc.predict(features_df)[0]  # Use DataFrame to avoid warnings
 
         # Log prediction result
         prediction = "Phishing" if y_pred == -1 else "Legitimate"
@@ -61,7 +87,8 @@ def predict():
     except Exception as e:
         # Log the error
         logging.error(f"Error processing URL: {url} - {str(e)}")
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': f"Server Error: {str(e)}"}), 500
+
 
 if __name__ == "__main__":
-    app.run(port=5001, debug=True)
+    app.run(debug=True, port=5001)

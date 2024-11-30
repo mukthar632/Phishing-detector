@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Phishing URL Detector",
     "version": "1.0",
-    "description": "Detects phishing URLs in real-time by analyzing user-inputted URLs and monitoring browsing activity.",
+    "description": "Detects phishing URLs in real-time by analyzing user-inputted and active tab URLs.",
     "permissions": [
         "activeTab",
         "storage",
