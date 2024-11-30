@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Phishing URL Detector</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Include Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container p-3">
+    <div class="text-center mb-3">
+      <img src="icon.png" alt="Logo" width="64" height="64">
+    </div>
+    <h4 class="text-center mb-3">Phishing URL Detector</h4>
+    
+    <!-- URL Input and Check Button -->
+    <div class="input-group mb-3">
+      <input type="text" id="urlInput" class="form-control" placeholder="Enter URL">
+      <button id="checkButton" class="btn btn-primary">Check URL</button>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="text-center d-none">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Result Display -->
+    <div id="resultContainer" class="alert d-none mt-3" role="alert">
+      <span id="resultText"></span>
+    </div>
+
+  <!-- Include Bootstrap JS -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Include Your Custom JS -->
+  <script src="popup.js"></script>
+</body>
+</html>
