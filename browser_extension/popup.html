@@ -28,6 +28,21 @@
     #checkButton {
       width: 100%;
     }
+    #featureDetailsContainer {
+      margin-top: 20px;
+    }
+    #contributingFeaturesList {
+      margin-top: 10px;
+    }
+    #allFeaturesTable {
+      margin-top: 20px;
+      width: 100%;
+    }
+    #allFeaturesTable th,
+    #allFeaturesTable td {
+      padding: 5px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -54,6 +69,26 @@
     <div id="resultContainer" class="alert d-none" role="alert">
       <span id="resultText"></span>
     </div>
+
+    <!-- Feature Details Section -->
+    <div id="featureDetailsContainer" class="d-none">
+      <h5>Contributing Features:</h5>
+      <ul id="contributingFeaturesList"></ul>
+
+      <h5>All Extracted Features:</h5>
+      <table id="allFeaturesTable" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Dynamic rows will be added here by popup.js -->
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <!-- Include Bootstrap JS -->
   <script src="js/bootstrap.bundle.min.js"></script>

@@ -23,15 +23,11 @@ file = open("newmodel.pkl", "rb")
 gbc = pickle.load(file)
 file.close()
 
-# Initialize Flask app
-app = Flask(__name__)
-
 @app.route("/predict", methods=['POST'])
 def predict():
     """
     Endpoint for the browser extension to check URLs.
-    Accepts a JSON request with a URL and returns a prediction.
-    Logs the feature extraction details for debugging.
+    Returns the prediction along with detailed feature explanations.
     """
     try:
         # Extract URL from the request
@@ -51,7 +47,7 @@ def predict():
         obj = FeatureExtraction(url)
         feature_list = obj.getFeaturesList()
 
-        # Define the feature names (replace placeholders with your actual feature names)
+        # Define the feature names
         feature_names = [
             "UsingIP", "LongURL", "ShortURL", "Symbol@", "Redirecting//",
             "PrefixSuffix-", "SubDomains", "HTTPS", "DomainRegLen", "Favicon",
@@ -63,7 +59,7 @@ def predict():
             "LinksPointingToPage", "StatsReport"
         ]
 
-        # Convert features to DataFrame with feature names
+        # Create a DataFrame for features
         features_df = pd.DataFrame([feature_list], columns=feature_names)
 
         # Log extracted features
@@ -72,23 +68,30 @@ def predict():
 
         # Make prediction
         y_pred = gbc.predict(features_df)[0]  # Use DataFrame to avoid warnings
+        prediction = "Phishing" if y_pred == -1 else "Legitimate"
 
         # Log prediction result
-        prediction = "Phishing" if y_pred == -1 else "Legitimate"
         logging.info(f"Prediction: {prediction}")
 
-        # Return result as JSON
+        # Identify contributing features (Example: using basic conditions)
+        contributing_features = []
+        for name, value in zip(feature_names, feature_list):
+            if value == -1:  # Negative value indicates a risky feature
+                contributing_features.append(name)
+
+        # Return detailed response as JSON
         return jsonify({
             'url': url,
             'phishing': bool(y_pred == -1),  # True for phishing, False for legitimate
-            'message': "Phishing website detected!" if y_pred == -1 else "Legitimate website"
+            'message': "Phishing website detected!" if y_pred == -1 else "Legitimate website",
+            'extracted_features': dict(zip(feature_names, feature_list)),
+            'contributing_features': contributing_features
         })
 
     except Exception as e:
         # Log the error
         logging.error(f"Error processing URL: {url} - {str(e)}")
         return jsonify({'error': f"Server Error: {str(e)}"}), 500
-
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

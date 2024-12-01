@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     const resultContainer = document.getElementById("resultContainer");
     const resultText = document.getElementById("resultText");
     const loadingSpinner = document.getElementById("loadingSpinner");
+    const featureDetailsContainer = document.getElementById("featureDetailsContainer");
+    const contributingFeaturesList = document.getElementById("contributingFeaturesList");
+    const allFeaturesTable = document.getElementById("allFeaturesTable");
 
     // Automatically fetch the active tab's URL
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -20,6 +23,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Clear previous result and show the spinner
         resultContainer.classList.add("d-none");
+        featureDetailsContainer.classList.add("d-none");
         loadingSpinner.classList.remove("d-none");
 
         if (!url) {
@@ -58,6 +62,36 @@ document.addEventListener("DOMContentLoaded", async function () {
                     resultContainer.classList.add("alert-success");
                     resultText.textContent = "✅ Legitimate Website.";
                 }
+
+                // Display contributing features
+                contributingFeaturesList.innerHTML = "";
+                if (data.contributing_features.length > 0) {
+                    data.contributing_features.forEach((feature) => {
+                        const li = document.createElement("li");
+                        li.textContent = feature;
+                        contributingFeaturesList.appendChild(li);
+                    });
+                } else {
+                    const li = document.createElement("li");
+                    li.textContent = "No contributing risky features detected.";
+                    contributingFeaturesList.appendChild(li);
+                }
+
+                // Display all extracted features in a table
+                allFeaturesTable.innerHTML = `
+                    <tr>
+                        <th>Feature</th>
+                        <th>Value</th>
+                    </tr>
+                `;
+                for (const [key, value] of Object.entries(data.extracted_features)) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td>${key}</td><td>${value}</td>`;
+                    allFeaturesTable.appendChild(row);
+                }
+
+                // Show feature details
+                featureDetailsContainer.classList.remove("d-none");
             } else {
                 // Handle server-side errors
                 resultContainer.classList.remove("d-none", "alert-success", "alert-danger");
