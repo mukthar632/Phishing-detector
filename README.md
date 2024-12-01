@@ -4,17 +4,25 @@
 
 ![image1](https://github.com/asrith-reddy/Phishing-detector/assets/76733972/fe706a06-84fe-493f-abb8-34d3fbc594b5)
 
-## Objective
+# Problem Statement <img src="https://user-images.githubusercontent.com/130077430/230730194-a7389fed-f5fd-48d3-856a-0212057f2500.png" width="90" height="80">
+
+Phishing attacks pose a significant threat to online users, compromising their privacy, financial security, and trust in online interactions. Detecting and mitigating phishing sites remains challenging, requiring effective techniques to identify and differentiate between legitimate and malicious websites accurately.
+
+Therefore, a critical need is to develop an improved system combining advanced machine learning techniques, feature engineering, and behavioural analysis to detect phishing sites accurately and efficiently. By addressing these challenges, the proposed methodology aims to improve the security of online users, protect their sensitive information, and foster a safer digital environment.
+
+# Introduction <img src="https://user-images.githubusercontent.com/72274851/152814876-73362bcc-bde6-411f-ba80-235e911f276f.gif" width="90" height="90">
 
 A phishing website is a common social engineering method that mimics trustful uniform resource locators (URLs) and webpages. The objective of this project is to train machine learning models and deep neural nets on the dataset created to predict phishing websites. Both phishing and benign URLs of websites are gathered to form a dataset and from them required URL and website content-based features are extracted. The performance level of each model is measures and compared.
 
-## Installation
+# Procedure <img src="https://th.bing.com/th/id/R.02832177b40b49d50674126476f980c3?rik=aXibwvpQe645bg&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2fjcx%2f6rb%2fjcx6rbngi.png&ehk=xllVkMLnEE%2fEXx%2fnWbpceiVVfvTNGJmODcZ9fEBJVGA%3d&risl=&pid=ImgRaw&r=0" width="120" height="100"> 
+
+## 1️⃣ Installation
 To install the required packages and libraries, run this command in the project directory after Forking and cloning this repository:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Technologies Used
+## 2️⃣ Technologies Used
 
 ![](https://forthebadge.com/images/badges/made-with-python.svg)
 
@@ -23,15 +31,15 @@ pip install -r requirements.txt
 [<img target="_blank" src="https://scikit-learn.org/stable/_static/scikit-learn-logo-small.png" width=200>](https://scikit-learn.org/stable/) 
 [<img target="_blank" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScq-xocLctL07Jy0tpR_p9w0Q42_rK1aAkNfW6sm3ucjFKWML39aaJPgdhadyCnEiK7vw&usqp=CAU" width=200>](https://flask.palletsprojects.com/en/2.0.x/) 
 
-## Feature Extraction
+## 3️⃣ Feature Extraction
 The system starts by retrieving URLs to be checked for phishing. These URLs can be collected from user input in the webpage created. Once the URLs are obtained, the system extracts relevant features from the web pages. These features are essential for training and evaluating the machine learning models. Various features were extracted from the URL database based on Domain, HTML and Address bar of the URLs. 
 
-## Machine Learning Models
+## 4️⃣ Machine Learning Models
 
 Various machine learning models are compared and The machine learning model with high accuracy is selected which predicts whether the URL is a phishing site or not. It provides a probability score or a binary classification (phishing or not phishing) based on the trained model's decision boundary. The system categorize URLs into "phishing" or "legitimate" and the result is finally displayed on the webpage. 
 #### Refer Phishingproject.ipynb for more details.
 
-## Result
+# Result <img src="https://cdn4.iconfinder.com/data/icons/business-startup-36/64/552-512.png" width="90" height="80">
 
 Accuracy of various model used for URL detection
 <br>
