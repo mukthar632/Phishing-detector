@@ -18,7 +18,7 @@ from urllib3.util import url
 
 
 class FeatureExtraction:
-    features = 
+    features = []
 
     def __init__(self, url):
         self.features = []
